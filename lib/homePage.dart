@@ -6,26 +6,25 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:recipe_app/favourite.dart';
 import 'package:recipe_app/food_item_display.dart';
+import 'package:recipe_app/profile.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
-  
-
   @override
   State<Homepage> createState() => _HomepageState();
-  
 }
 
-  void signOut() async {
-    await FirebaseAuth.instance.signOut();
-  }
+void signOut() async {
+  await FirebaseAuth.instance.signOut();
+}
 
 class _HomepageState extends State<Homepage> {
   // fetch categorItems
   final CollectionReference categoryItems =
       FirebaseFirestore.instance.collection("categories");
 
+  
   String category = "All";
 
   //fetch recipe details based on category
@@ -43,14 +42,13 @@ class _HomepageState extends State<Homepage> {
 
   //Snackbar
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Header(user),
+            Header(user, context),
             const SizedBox(
               height: 10,
             ),
@@ -67,51 +65,57 @@ class _HomepageState extends State<Homepage> {
             StreamBuilder(
                 stream: selectedRecipes.snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                final List<DocumentSnapshot> recipes = snapshot.data?.docs ?? [];
-                
-                  return snapshot.hasData ? 
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: recipes.map((e) => FoodItemDisplay(documentSnapshot: e) ).toList()
-          //               {
-          //                 // Container(
-          //                 //   height: 60,
-          //                 //   width: 90,
-          //                 //   margin: EdgeInsets.only(right: 8, top: 8, left: 4),
-          //                 //   decoration: BoxDecoration(
-          //                 //     color: Colors.green[200],
-          //                 //   ),
-          //                 // ),
-          //                 Stack(
-          //          children: [
-          //          Container(
-          //         height: 100,
-          //         width: double.infinity,
-          //         decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(30),
-          //         image: DecorationImage(
-          //           image: NetworkImage( 
-                      
-          //             documentSnapshot["image"],
-                    
-          //            ),
-          //         ),  
-          //       ),
-          //     ),
-          //     SizedBox(height: 20,),
-          //     Text(documentSnapshot['name'], style: TextStyle(fontSize: 20),),
-          //   ],
-          // ),
-                         
-          //       }
-             
-                      ),
-                    ) : Center(child: CircularProgressIndicator());
+                  final List<DocumentSnapshot> recipes =
+                      snapshot.data?.docs ?? [];
+
+                  return snapshot.hasData
+                      ? SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: recipes
+                                  .map((e) =>
+                                      FoodItemDisplay(documentSnapshot: e))
+                                  .toList()
+                              //               {
+                              //                 // Container(
+                              //                 //   height: 60,
+                              //                 //   width: 90,
+                              //                 //   margin: EdgeInsets.only(right: 8, top: 8, left: 4),
+                              //                 //   decoration: BoxDecoration(
+                              //                 //     color: Colors.green[200],
+                              //                 //   ),
+                              //                 // ),
+                              //                 Stack(
+                              //          children: [
+                              //          Container(
+                              //         height: 100,
+                              //         width: double.infinity,
+                              //         decoration: BoxDecoration(
+                              //         borderRadius: BorderRadius.circular(30),
+                              //         image: DecorationImage(
+                              //           image: NetworkImage(
+
+                              //             documentSnapshot["image"],
+
+                              //            ),
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     SizedBox(height: 20,),
+                              //     Text(documentSnapshot['name'], style: TextStyle(fontSize: 20),),
+                              //   ],
+                              // ),
+
+                              //       }
+
+                              ),
+                        )
+                      : Center(child: CircularProgressIndicator());
                 }),
-                SizedBox(height: 10,),
-                
+            SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),
@@ -195,7 +199,7 @@ class _HomepageState extends State<Homepage> {
 }
 
 // header method
-Widget Header(User user) {
+Widget Header(User user, BuildContext context) {
   return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
     const Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -226,6 +230,9 @@ Widget Header(User user) {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         InkWell(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfilePage(user: user,)));
+        },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ClipRRect(
@@ -235,7 +242,7 @@ Widget Header(User user) {
                   Image.asset("assets/images/user2.png", width: 40, height: 40),
             ),
           ),
-          onTap: () {},
+          
         ),
         Padding(
           padding: const EdgeInsets.only(right: 4),
@@ -361,33 +368,31 @@ Widget stylish_bar(BuildContext context) {
       ]);
 }
 
-  void showCustomSnackbar(BuildContext context, String message) {
-    final snackBar = SnackBar(
-      content: Text(
-        message,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-          fontWeight: FontWeight.bold,
-        ),
+void showCustomSnackbar(BuildContext context, String message) {
+  final snackBar = SnackBar(
+    content: Text(
+      message,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 16.0,
+        fontWeight: FontWeight.bold,
       ),
-      backgroundColor: const Color.fromARGB(255, 1, 88, 46),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      action: SnackBarAction(
-        label: 'DISMISS',
-        textColor: Colors.yellow,
-        onPressed: () {
-          // Dismiss action code
-        },
-      ),
-    );
+    ),
+    backgroundColor: const Color.fromARGB(255, 1, 88, 46),
+    behavior: SnackBarBehavior.floating,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    action: SnackBarAction(
+      label: 'DISMISS',
+      textColor: Colors.yellow,
+      onPressed: () {
+        // Dismiss action code
+      },
+    ),
+  );
 
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
 
 //sign out function
-
-

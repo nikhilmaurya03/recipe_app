@@ -6,7 +6,6 @@ import 'package:recipe_app/firebase_options.dart';
 import 'package:recipe_app/home.dart';
 import 'package:recipe_app/provider/favourite_provider.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
-  @override 
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
@@ -35,3 +34,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+//hey users
