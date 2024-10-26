@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:recipe_app/favourite.dart';
+import 'package:recipe_app/provider/favourite_provider.dart';
 
 class FoodItemDisplay extends StatefulWidget {
   final DocumentSnapshot<Object?> documentSnapshot;
@@ -14,6 +16,7 @@ class _FoodItemDisplayState extends State<FoodItemDisplay> {
   IconData icon = Icons.favorite_border;
   @override
   Widget build(BuildContext context) {
+    final favProvider = FavouriteProvider.of(context);
     return GestureDetector(
       onTap: () {},
       // child: Container(
@@ -87,17 +90,24 @@ class _FoodItemDisplayState extends State<FoodItemDisplay> {
           Positioned(
             top: 5,
             right: 7,
-            child: const Card(
-                elevation: 2,
-                shape: CircleBorder(),
-                borderOnForeground: false,
-                child: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Icon(
-                    Icons.favorite_border,
-                    color: Colors.teal,
-                  ),
-                )),
+            child: InkWell(
+              onTap: () {
+                favProvider.toggleFavourite(widget.documentSnapshot);
+              },
+              child:  Card(
+                  elevation: 2,
+                  shape: CircleBorder(),
+                  borderOnForeground: false,
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Icon(
+                      favProvider.isExist(widget.documentSnapshot)?
+                      Icons.favorite : Icons.favorite_border,
+                      color: favProvider.isExist(widget.documentSnapshot)?
+                      Colors.red:Colors.teal,
+                    ),
+                  )),
+            ),
           ),
         ],
       ),

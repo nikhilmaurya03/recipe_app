@@ -47,71 +47,73 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Header(user),
-          const SizedBox(
-            height: 10,
-          ),
-          search(),
-          const SizedBox(
-            height: 20,
-          ),
-          explore(),
-          const SizedBox(height: 10),
-          selectCategory(),
-          SizedBox(
-            height: 30,
-          ),
-          StreamBuilder(
-              stream: selectedRecipes.snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              final List<DocumentSnapshot> recipes = snapshot.data?.docs ?? [];
-              
-                return snapshot.hasData ? 
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: recipes.map((e) => FoodItemDisplay(documentSnapshot: e) ).toList()
-        //               {
-        //                 // Container(
-        //                 //   height: 60,
-        //                 //   width: 90,
-        //                 //   margin: EdgeInsets.only(right: 8, top: 8, left: 4),
-        //                 //   decoration: BoxDecoration(
-        //                 //     color: Colors.green[200],
-        //                 //   ),
-        //                 // ),
-        //                 Stack(
-        //          children: [
-        //          Container(
-        //         height: 100,
-        //         width: double.infinity,
-        //         decoration: BoxDecoration(
-        //         borderRadius: BorderRadius.circular(30),
-        //         image: DecorationImage(
-        //           image: NetworkImage( 
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Header(user),
+            const SizedBox(
+              height: 10,
+            ),
+            search(),
+            const SizedBox(
+              height: 20,
+            ),
+            explore(),
+            const SizedBox(height: 10),
+            selectCategory(),
+            SizedBox(
+              height: 30,
+            ),
+            StreamBuilder(
+                stream: selectedRecipes.snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                final List<DocumentSnapshot> recipes = snapshot.data?.docs ?? [];
+                
+                  return snapshot.hasData ? 
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: recipes.map((e) => FoodItemDisplay(documentSnapshot: e) ).toList()
+          //               {
+          //                 // Container(
+          //                 //   height: 60,
+          //                 //   width: 90,
+          //                 //   margin: EdgeInsets.only(right: 8, top: 8, left: 4),
+          //                 //   decoration: BoxDecoration(
+          //                 //     color: Colors.green[200],
+          //                 //   ),
+          //                 // ),
+          //                 Stack(
+          //          children: [
+          //          Container(
+          //         height: 100,
+          //         width: double.infinity,
+          //         decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(30),
+          //         image: DecorationImage(
+          //           image: NetworkImage( 
+                      
+          //             documentSnapshot["image"],
                     
-        //             documentSnapshot["image"],
-                  
-        //            ),
-        //         ),  
-        //       ),
-        //     ),
-        //     SizedBox(height: 20,),
-        //     Text(documentSnapshot['name'], style: TextStyle(fontSize: 20),),
-        //   ],
-        // ),
-                       
-        //       }
-     
-                    ),
-                  ) : Center(child: CircularProgressIndicator());
-              }),
-              SizedBox(height: 10,),
-              
-        ],
+          //            ),
+          //         ),  
+          //       ),
+          //     ),
+          //     SizedBox(height: 20,),
+          //     Text(documentSnapshot['name'], style: TextStyle(fontSize: 20),),
+          //   ],
+          // ),
+                         
+          //       }
+             
+                      ),
+                    ) : Center(child: CircularProgressIndicator());
+                }),
+                SizedBox(height: 10,),
+                
+          ],
+        ),
       ),
       bottomNavigationBar: stylish_bar(context),
     );
