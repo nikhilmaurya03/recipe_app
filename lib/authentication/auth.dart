@@ -3,7 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/authentication/login.dart';
-import 'package:recipe_app/homePage.dart';
+import 'package:recipe_app/screen/homePage.dart';
 
 class Auth extends StatefulWidget {
   const Auth({super.key});

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app/custom_clipper.dart';
+import 'package:recipe_app/custom%20clipper/custom_clipper.dart';
 import 'package:recipe_app/provider/favourite_provider.dart';
 
 class Favourite extends StatefulWidget {

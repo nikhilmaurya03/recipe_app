@@ -5,7 +5,7 @@ import 'package:recipe_app/authentication/auth.dart';
 import 'package:recipe_app/firebase_options.dart';
 import 'package:recipe_app/home.dart';
 import 'package:recipe_app/provider/favourite_provider.dart';
-import 'package:recipe_app/splash.dart';
+import 'package:recipe_app/screen/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
+      providers: [ 
         ChangeNotifierProvider(create: (_) => FavouriteProvider()),
       ],
       child: MaterialApp(

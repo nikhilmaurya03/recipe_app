@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:recipe_app/favourite.dart';
+import 'package:recipe_app/screen/details.dart';
+import 'package:recipe_app/screen/favourite.dart';
 import 'package:recipe_app/provider/favourite_provider.dart';
 
 class FoodItemDisplay extends StatefulWidget {
@@ -37,7 +38,7 @@ class _FoodItemDisplayState extends State<FoodItemDisplay> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Favourite()));
+                            builder: (context) => DetailsPage(documentSnapshot: widget.documentSnapshot)));
                   },
                   child: Container(
                     height: 160,
@@ -96,7 +97,7 @@ class _FoodItemDisplayState extends State<FoodItemDisplay> {
               },
               child:  Card(
                   elevation: 2,
-                  shape: CircleBorder(),
+                  shape: const CircleBorder(),
                   borderOnForeground: false,
                   child: Padding(
                     padding: EdgeInsets.all(10.0),
@@ -106,9 +107,10 @@ class _FoodItemDisplayState extends State<FoodItemDisplay> {
                       color: favProvider.isExist(widget.documentSnapshot)?
                       Colors.red:Colors.teal,
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ),
-          ),
         ],
       ),
     );

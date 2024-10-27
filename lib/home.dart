@@ -3,8 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:recipe_app/favourite.dart';
-import 'package:recipe_app/food_item_display.dart';
+import 'package:recipe_app/screen/favourite.dart';
+import 'package:recipe_app/screen/food_item_display.dart';
 
 class Home extends StatefulWidget {
   Home({super.key, required this.title});

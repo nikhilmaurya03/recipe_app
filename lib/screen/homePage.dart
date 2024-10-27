@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:recipe_app/favourite.dart';
-import 'package:recipe_app/food_item_display.dart';
-import 'package:recipe_app/profile.dart';
+import 'package:recipe_app/screen/favourite.dart';
+import 'package:recipe_app/screen/food_item_display.dart';
+import 'package:recipe_app/screen/profile.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
